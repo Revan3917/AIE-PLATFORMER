@@ -52,43 +52,39 @@ Player.prototype.update = function (deltaTime) {
 	var right = false;
 	var jump = false;
 	// check keypress events
-	if(keyboard.isKeyDown(keyboard.KEY_LEFT) == true) {
-	left = true;
-	this.direction = LEFT;
-	if(this.sprite.currentAnimation != ANIM_WALK_LEFT)
-	this.sprite.setAnimation(ANIM_WALK_LEFT);
+	if (keyboard.isKeyDown(keyboard.KEY_LEFT) == true) {
+		left = true;
+		this.direction = LEFT;
+		if (this.sprite.currentAnimation != ANIM_WALK_LEFT)
+			this.sprite.setAnimation(ANIM_WALK_LEFT);
 	}
-	if(keyboard.isKeyDown(keyboard.KEY_RIGHT) == true) {
-	right = true;
-	this.direction = RIGHT;
-	if(this.sprite.currentAnimation != ANIM_WALK_RIGHT)
-	this.sprite.setAnimation(ANIM_WALK_RIGHT);
+	if (keyboard.isKeyDown(keyboard.KEY_RIGHT) == true) {
+		right = true;
+		this.direction = RIGHT;
+		if (this.sprite.currentAnimation != ANIM_WALK_RIGHT)
+			this.sprite.setAnimation(ANIM_WALK_RIGHT);
 	}
 	else {
-if(this.jumping == false && this.falling == false)
-{
-if(this.direction == LEFT)
-{
- if(this.sprite.currentAnimation != ANIM_IDLE_LEFT)
- this.sprite.setAnimation(ANIM_IDLE_LEFT);
-}
-else
-{
- if(this.sprite.currentAnimation != ANIM_IDLE_RIGHT)
- this.sprite.setAnimation(ANIM_IDLE_RIGHT);
-}
-}
-}
-	if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
-{
-jump = true;
-if(left == true) {
-this.sprite.setAnimation(ANIM_JUMP_LEFT);
-}
-if(right == true) {
-this.sprite.setAnimation(ANIM_JUMP_RIGHT);
-}
-}
+		if (this.jumping == false && this.falling == false) {
+			if (this.direction == LEFT) {
+				if (this.sprite.currentAnimation != ANIM_IDLE_LEFT)
+					this.sprite.setAnimation(ANIM_IDLE_LEFT);
+			}
+			else {
+				if (this.sprite.currentAnimation != ANIM_IDLE_RIGHT)
+					this.sprite.setAnimation(ANIM_IDLE_RIGHT);
+			}
+		}
+	}
+	if (keyboard.isKeyDown(keyboard.KEY_SPACE) == true) {
+		jump = true;
+		if (left == true) {
+			this.sprite.setAnimation(ANIM_JUMP_LEFT);
+		}
+		if (right == true) {
+			this.sprite.setAnimation(ANIM_JUMP_RIGHT);
+		}
+	}
 
 	var wasleft = this.velocity.x < 0;
 	var wasright = this.velocity.x > 0;
@@ -180,7 +176,7 @@ this.sprite.setAnimation(ANIM_JUMP_RIGHT);
 	var celldiag = cellAtTileCoord(LAYER_PLATFORMS, tx + 1, ty + 1);
 
 
- if (this.velocity.y < 0) {
+	if (this.velocity.y < 0) {
 		if ((cell && !celldown) || (cellright && !celldiag && nx)) {
 			// clamp the y position to avoid jumping into platform above
 			this.position.y = tileToPixel(ty + 1);
@@ -210,6 +206,5 @@ Player.prototype.draw = function () {
 	context.translate(this.x, this.y);
 	this.sprite.draw(context, this.position.x, this.position.y);
 	context.rotate(this.rotation);
-	context.drawImage(this.image, -this.width / 2, -this.height / 2);
 	context.restore();
 }
