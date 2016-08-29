@@ -149,7 +149,7 @@ Player.prototype.update = function (deltaTime) {
 	var celldown = cellAtTileCoord(LAYER_PLATFORMS, tx, ty + 1);
 	var celldiag = cellAtTileCoord(LAYER_PLATFORMS, tx + 1, ty + 1);
 
-}
+
 else if (this.velocity.y < 0) {
 	if ((cell && !celldown) || (cellright && !celldiag && nx)) {
 		// clamp the y position to avoid jumping into platform above
@@ -174,7 +174,7 @@ else if (this.velocity.x < 0) {
 		this.position.x = tileToPixel(tx + 1); this.velocity.x = 0; // stop horizontal velocity
 	}
 }
-
+}
 Player.prototype.draw = function () {
 	context.save();
 	context.translate(this.x, this.y);
