@@ -52,11 +52,17 @@ Player.prototype.update = function (deltaTime) {
 	var right = false;
 	var jump = false;
 	// check keypress events
-	if (keyboard.isKeyDown(keyboard.KEY_LEFT) == true) {
-		left = true;
+	if(keyboard.isKeyDown(keyboard.KEY_LEFT) == true) {
+	left = true;
+	this.direction = LEFT;
+	if(this.sprite.currentAnimation != ANIM_WALK_LEFT)
+	this.sprite.setAnimation(ANIM_WALK_LEFT);
 	}
-	if (keyboard.isKeyDown(keyboard.KEY_RIGHT) == true) {
-		right = true;
+	if(keyboard.isKeyDown(keyboard.KEY_RIGHT) == true) {
+	right = true;
+	this.direction = RIGHT;
+	if(this.sprite.currentAnimation != ANIM_WALK_RIGHT)
+	this.sprite.setAnimation(ANIM_WALK_RIGHT);
 	}
 	if (keyboard.isKeyDown(keyboard.KEY_SPACE) == true) {
 		jump = true;
