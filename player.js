@@ -64,9 +64,31 @@ Player.prototype.update = function (deltaTime) {
 	if(this.sprite.currentAnimation != ANIM_WALK_RIGHT)
 	this.sprite.setAnimation(ANIM_WALK_RIGHT);
 	}
-	if (keyboard.isKeyDown(keyboard.KEY_SPACE) == true) {
-		jump = true;
-	}
+	else {
+if(this.jumping == false && this.falling == false)
+{
+if(this.direction == LEFT)
+{
+ if(this.sprite.currentAnimation != ANIM_IDLE_LEFT)
+ this.sprite.setAnimation(ANIM_IDLE_LEFT);
+}
+else
+{
+ if(this.sprite.currentAnimation != ANIM_IDLE_RIGHT)
+ this.sprite.setAnimation(ANIM_IDLE_RIGHT);
+}
+}
+}
+	if(keyboard.isKeyDown(keyboard.KEY_SPACE) == true)
+{
+jump = true;
+if(left == true) {
+this.sprite.setAnimation(ANIM_JUMP_LEFT);
+}
+if(right == true) {
+this.sprite.setAnimation(ANIM_JUMP_RIGHT);
+}
+}
 
 	var wasleft = this.velocity.x < 0;
 	var wasright = this.velocity.x > 0;
@@ -158,7 +180,7 @@ Player.prototype.update = function (deltaTime) {
 	var celldiag = cellAtTileCoord(LAYER_PLATFORMS, tx + 1, ty + 1);
 
 
-else if (this.velocity.y < 0) {
+ if (this.velocity.y < 0) {
 		if ((cell && !celldown) || (cellright && !celldiag && nx)) {
 			// clamp the y position to avoid jumping into platform above
 			this.position.y = tileToPixel(ty + 1);
