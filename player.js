@@ -61,13 +61,17 @@ Player.prototype.update = function (deltaTime) {
 	if (keyboard.isKeyDown(keyboard.KEY_RIGHT) == true) {
 		right = true;
 		this.direction = RIGHT;
-		if (this.sprite.currentAnimation != ANIM_WALK_RIGHT)
+		if (this.sprite.currentAnimation != ANIM_WALK_RIGHT &&
+this.jumping == false)
+ 
 			this.sprite.setAnimation(ANIM_WALK_RIGHT);
 	}
 	else {
 		if (this.jumping == false && this.falling == false) {
 			if (this.direction == LEFT) {
-				if (this.sprite.currentAnimation != ANIM_IDLE_LEFT)
+				if (this.sprite.currentAnimation != ANIM_IDLE_LEFT &&
+this.jumping == false)
+
 					this.sprite.setAnimation(ANIM_IDLE_LEFT);
 			}
 			else {
@@ -85,6 +89,17 @@ Player.prototype.update = function (deltaTime) {
 			this.sprite.setAnimation(ANIM_JUMP_RIGHT);
 		}
 	}
+	if (jump && !this.jumping && !falling)
+{
+// apply an instantaneous (large) vertical impulse
+ddy = ddy - JUMP;
+ this.jumping = true;
+if(this.direction == LEFT)
+this.sprite.setAnimation(ANIM_JUMP_LEFT)
+else
+this.sprite.setAnimation(ANIM_JUMP_RIGHT)
+}
+
 
 	var wasleft = this.velocity.x < 0;
 	var wasright = this.velocity.x > 0;
@@ -202,9 +217,7 @@ Player.prototype.update = function (deltaTime) {
 	}
 }
 Player.prototype.draw = function () {
-	context.save();
-	context.translate(this.x, this.y);
+	
 	this.sprite.draw(context, this.position.x, this.position.y);
-	context.rotate(this.rotation);
-	context.restore();
+	
 }
