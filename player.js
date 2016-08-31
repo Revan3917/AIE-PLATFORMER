@@ -68,7 +68,7 @@ Player.prototype.update = function (deltaTime) {
 					this.jumping == false)
 
 					this.sprite.setAnimation(ANIM_WALK_RIGHT);
-			}
+		}}
 			{
 				if (this.jumping == false && this.falling == false) {
 					if (this.direction == LEFT) {
@@ -80,7 +80,7 @@ Player.prototype.update = function (deltaTime) {
 							this.sprite.setAnimation(ANIM_IDLE_RIGHT);
 					}
 				}
-			}
+	}}
 			if (keyboard.isKeyDown(keyboard.KEY_SPACE) == true) {
 				jump = true;
 				if (left == true) {
@@ -201,7 +201,7 @@ Player.prototype.update = function (deltaTime) {
 			}
 
 		}
-}}
+
 
 
 
