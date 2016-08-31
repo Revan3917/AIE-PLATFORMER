@@ -50,13 +50,13 @@ Player.prototype.update = function (deltaTime) {
 	var right = false;
 	var jump = false;
 	this.sprite.update(deltaTime);
-	this.sprite.draw(context, this.position.x, this.position.y);
+	
 	// check keypress events
 	if (keyboard.isKeyDown(keyboard.KEY_LEFT) == true) {
 		left = true;
 		this.direction = LEFT;
-		if (this.sprite.currentAnimation != ANIM_WALK_LEFT  &&
-this.jumping == false)
+		if (this.sprite.currentAnimation != ANIM_WALK_LEFT &&
+			this.jumping == false)
 
 			this.sprite.setAnimation(ANIM_WALK_LEFT);
 
@@ -65,7 +65,7 @@ this.jumping == false)
 				right = true;
 				this.direction = RIGHT;
 				if (this.sprite.currentAnimation != ANIM_WALK_RIGHT &&
-this.jumping == false)
+					this.jumping == false)
 
 					this.sprite.setAnimation(ANIM_WALK_RIGHT);
 			}
@@ -189,19 +189,18 @@ this.jumping == false)
 					this.velocity.x = 0; // stop horizontal velocity
 				}
 			}
-	
-if (jump && !this.jumping && !falling)
-{
-// apply an instantaneous (large) vertical impulse
-ddy = ddy - JUMP;
- this.jumping = true;
-if(this.direction == LEFT)
-this.sprite.setAnimation(ANIM_JUMP_LEFT)
-else
-this.sprite.setAnimation(ANIM_JUMP_RIGHT)
-}
 
-	}
+			if (jump && !this.jumping && !falling) {
+				// apply an instantaneous (large) vertical impulse
+				ddy = ddy - JUMP;
+				this.jumping = true;
+				if (this.direction == LEFT)
+					this.sprite.setAnimation(ANIM_JUMP_LEFT)
+				else
+					this.sprite.setAnimation(ANIM_JUMP_RIGHT)
+			}
+
+		}
 
 
 
