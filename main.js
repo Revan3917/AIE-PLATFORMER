@@ -180,13 +180,9 @@ function drawMap() {
 function run() {
 	context.fillStyle = "#ccc";
 	context.fillRect(0, 0, canvas.width, canvas.height);
-
 	var deltaTime = getDeltaTime();
-
-
+	player.update(deltaTime); // update the player before drawing the map
 	drawMap();
-
-	player.update(deltaTime);
 	player.draw();
 
 
@@ -210,13 +206,33 @@ function run() {
 	context.font = "14px Arial";
 	context.fillText("FPS: " + fps, 5, 20, 100);
 }
+var musicBackground;
+var sfxFire;
 initialize();
 // life counter
 //for(vari=0; i<lives; i++)
 {
 	//context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
 }
-if (player.y >= canvas.height) lives--;
+if (player.y >= canvas.height) lives--; musicBackground = new Howl(
+	{
+		urls: ["background.mp3"],
+		loop: true,
+		buffer: true,
+		volume: 0.5
+	});
+musicBackground.play();
+sfxFire = new Howl(
+	{
+		urls: ["fireEffect.ogg"],
+		buffer: true,
+		volume: 1,
+		onend: function () {
+			isSfxPlaying = false;
+		}
+	});
+
+
 //-------------------- Don't modify anything below here
 
 
