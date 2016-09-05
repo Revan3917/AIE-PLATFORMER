@@ -47,7 +47,7 @@ var Player = function () {
 
 
 Player.prototype.update = function (deltaTime) {
-	
+	this.sprite.draw(context, this.position.x - worldOffsetX, this.position.y);
 	
 	var left = false;
 	var right = false;
