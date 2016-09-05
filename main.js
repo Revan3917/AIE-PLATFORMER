@@ -162,7 +162,7 @@ function run() {
 
 	var deltaTime = getDeltaTime();
 
-
+	
 	drawMap();
 
 	player.update(deltaTime);
@@ -195,7 +195,7 @@ initialize();
 {
 //context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
 }
-
+if (player.y >= canvas.height) lives--;
 //-------------------- Don't modify anything below here
 
 
