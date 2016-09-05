@@ -74,11 +74,11 @@ Player.prototype.update = function (deltaTime) {
 					if (this.direction == LEFT) 
 						if (this.sprite.currentAnimation != ANIM_IDLE_LEFT)
 							this.sprite.setAnimation(ANIM_IDLE_LEFT);
-					
-					else {
+				
+					else 
 						if (this.sprite.currentAnimation != ANIM_IDLE_RIGHT)
 							this.sprite.setAnimation(ANIM_IDLE_RIGHT);
-					}
+				
 				}
 			
 			if (keyboard.isKeyDown(keyboard.KEY_SPACE) == true) {
@@ -137,21 +137,7 @@ Player.prototype.update = function (deltaTime) {
 			var cellright = cellAtTileCoord(LAYER_PLATFORMS, tx + 1, ty);
 			var celldown = cellAtTileCoord(LAYER_PLATFORMS, tx, ty + 1);
 			var celldiag = cellAtTileCoord(LAYER_PLATFORMS, tx + 1, ty + 1);
-			// collision detection
-			// Our collision detection logic is greatly simplified by the fact that the
-			// player is a rectangle and is exactly the same size as a single tile.
-			// So we know that the player can only ever occupy 1, 2 or 4 cells.
-			// This means we can short-circuit and avoid building a general purpose
-			// collision detection
-			// engine by simply looking at the 1 to 4 cells that the player occupies:
-			var tx = pixelToTile(this.position.x);
-			var ty = pixelToTile(this.position.y);
-			var nx = (this.position.x) % TILE; // true if player overlaps right
-			var ny = (this.position.y) % TILE; // true if player overlaps below
-			var cell = cellAtTileCoord(LAYER_PLATFORMS, tx, ty);
-			var cellright = cellAtTileCoord(LAYER_PLATFORMS, tx + 1, ty);
-			var celldown = cellAtTileCoord(LAYER_PLATFORMS, tx, ty + 1);
-			var celldiag = cellAtTileCoord(LAYER_PLATFORMS, tx + 1, ty + 1);
+			
 			// If the player has vertical velocity, then check to see if they have hit a platform
 			// below or above, in which case, stop their vertical velocity, and clamp their
 			// y position:

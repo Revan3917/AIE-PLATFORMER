@@ -1,5 +1,6 @@
 var canvas = document.getElementById("gameCanvas");
 var score = 0;
+var scoreText = score;
 var TILE = 35;
 var lives = 3
 var heartImage = document.createElement("img");
@@ -167,11 +168,13 @@ function run() {
 	player.update(deltaTime);
 	player.draw();
 
+
+
 	// score
 context.fillStyle = "yellow";
 context.font="32px Arial";
 varscoreText = "Score: " + score;
-//context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
+context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
 	// update the frame counter 
 	fpsTime += deltaTime;
 	fpsCount++;
