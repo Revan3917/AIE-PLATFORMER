@@ -3,13 +3,17 @@ var score = 0;
 var scoreText = score;
 var TILE = 35;
 var lives = 3
+var STATE_GAME = 1;
+var STATE_GAMEOVER = 2;
+var gameState = STATE_GAME;
 var heartImage = document.createElement("img");
 heartImage.src = "Heart.png"
 var context = canvas.getContext("2d");
-var LAYER_COUNT = 3;
+var LAYER_COUNT = 4;
 var LAYER_BACKGOUND = 0;
 var LAYER_PLATFORMS = 1;
 var LAYER_LADDERS = 2;
+var LAYER_OBJECT_TRIGGERS = 4;
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
 var cells = []; // the array that holds our simplified collision data
@@ -27,6 +31,7 @@ var ACCEL = MAXDX * 2;
 var FRICTION = MAXDX * 6;
 // (a large) instantaneous jump impulse
 var JUMP = METER * 1500;
+
 function initialize() {
 	for (var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) { // initialize the collision map
 		cells[layerIdx] = [];
@@ -195,6 +200,16 @@ function drawMap() {
 	}
 }
 
+function runGameOver(deltaTime)
+{
+	context.fillStyle = "#000";
+context.font="24px Arial";
+context.fillText("GAME OVER", 200, 240);
+
+}
+
+function runGame(deltaTime)
+{
 
 
 function run() {
@@ -220,12 +235,21 @@ function run() {
 		fps = fpsCount;
 		fpsCount = 0;
 	}
+switch(gameState)
+{
+case STATE_GAME:
+runGame(deltaTime);
+break;
+case STATE_GAMEOVER:
+runGameOver(deltaTime);
+break;
+}
 
 	// draw the FPS
 	context.fillStyle = "#f00";
 	context.font = "14px Arial";
 	context.fillText("FPS: " + fps, 5, 20, 100);
-}
+}}
 var musicBackground;
 var sfxFire;
 initialize();
