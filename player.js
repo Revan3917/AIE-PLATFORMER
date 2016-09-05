@@ -11,7 +11,6 @@ var ANIM_MAX = 6;
 
 var Player = function () {
 	this.cooldownTimer = 0;
-
 	this.sprite = new Sprite("ChuckNorris.png");
 	this.sprite.buildAnimation(12, 8, 165, 126, 0.05,
 		[0, 1, 2, 3, 4, 5, 6, 7]);
@@ -49,15 +48,7 @@ var Player = function () {
 
 Player.prototype.update = function (deltaTime) {
 	
-	{
-		context.drawImage(this.image,
-			this.position.x - worldOffsetX, this.position.y);
-	}
-	{
-		this.sprite.draw(context,
-			this.position.x - worldOffsetX,
-			this.position.y);
-	}
+	
 	var left = false;
 	var right = false;
 	var jump = false;
