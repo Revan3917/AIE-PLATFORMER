@@ -46,6 +46,15 @@ var Player = function () {
 
 
 Player.prototype.update = function (deltaTime) {
+	{
+context.drawImage(this.image,
+this.position.x - worldOffsetX, this.position.y);
+}
+{
+this.sprite.draw(context,
+this.position.x - worldOffsetX,
+this.position.y);
+}
 	var left = false;
 	var right = false;
 	var jump = false;

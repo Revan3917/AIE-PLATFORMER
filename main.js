@@ -13,19 +13,19 @@ var LAYER_LADDERS = 2;
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
 var cells = []; // the array that holds our simplified collision data
- // abitrary choice for 1m
+// abitrary choice for 1m
 var METER = TILE;
- // very exaggerated gravity (6x)
+// very exaggerated gravity (6x)
 var GRAVITY = METER * 9.8 * 6;
- // max horizontal speed (10 tiles per second)
+// max horizontal speed (10 tiles per second)
 var MAXDX = METER * 10;
- // max vertical speed (15 tiles per second)
+// max vertical speed (15 tiles per second)
 var MAXDY = METER * 15;
- // horizontal acceleration - take 1/2 second to reach maxdx
+// horizontal acceleration - take 1/2 second to reach maxdx
 var ACCEL = MAXDX * 2;
- // horizontal friction - take 1/6 second to stop from maxdx
+// horizontal friction - take 1/6 second to stop from maxdx
 var FRICTION = MAXDX * 6;
- // (a large) instantaneous jump impulse
+// (a large) instantaneous jump impulse
 var JUMP = METER * 1500;
 function initialize() {
 	for (var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) { // initialize the collision map
@@ -135,18 +135,39 @@ function bound(value, min, max) {
 	return value;
 }
 
+var worldOffsetX = 0;
 function drawMap() {
+	var startX = -1;
+	var maxTiles = Math.floor(SCREEN_WIDTH / TILE) + 2;
+	var tileX = pixelToTile(player.position.x);
+	var offsetX = TILE + Math.floor(player.position.x % TILE);
+
+	startX = tileX - Math.floor(maxTiles / 2);
+
+	if (startX < -1) {
+		startX = 0;
+		offsetX = 0;
+	}
+	if (startX > MAP.tw - maxTiles) {
+		startX = MAP.tw - maxTiles + 1;
+		offsetX = TILE;
+	}
+	worldOffsetX = startX * TILE + offsetX;
+
 	for (var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) {
-		var idx = 0;
 		for (var y = 0; y < level1.layers[layerIdx].height; y++) {
-			for (var x = 0; x < level1.layers[layerIdx].width; x++) {
+			var idx = y * level1.layers[layerIdx].width + startX;
+			for (var x = startX; x < startX + maxTiles; x++) {
 				if (level1.layers[layerIdx].data[idx] != 0) {
-					// the tiles in the Tiled map are base 1 (meaning a value of 0 means no tile), so subtract one from the tileset id to get the
-					// correct tile
+					// the tiles in the Tiled map are base 1 (meaning a value of 0 means no tile),
+					// so subtract one from the tileset id to get the correct tile
 					var tileIndex = level1.layers[layerIdx].data[idx] - 1;
-					var sx = TILESET_PADDING + (tileIndex % TILESET_COUNT_X) * (TILESET_TILE + TILESET_SPACING);
-					var sy = TILESET_PADDING + (Math.floor(tileIndex / TILESET_COUNT_Y)) * (TILESET_TILE + TILESET_SPACING);
-					context.drawImage(tileset, sx, sy, TILESET_TILE, TILESET_TILE, x * TILE, (y - 1) * TILE, TILESET_TILE, TILESET_TILE);
+					var sx = TILESET_PADDING + (tileIndex % TILESET_COUNT_X) *
+						(TILESET_TILE + TILESET_SPACING);
+					var sy = TILESET_PADDING + (Math.floor(tileIndex / TILESET_COUNT_Y)) *
+						(TILESET_TILE + TILESET_SPACING);
+					context.drawImage(tileset, sx, sy, TILESET_TILE, TILESET_TILE,
+						(x - startX) * TILE - offsetX, (y - 1) * TILE, TILESET_TILE, TILESET_TILE);
 				}
 				idx++;
 			}
@@ -162,7 +183,7 @@ function run() {
 
 	var deltaTime = getDeltaTime();
 
-	
+
 	drawMap();
 
 	player.update(deltaTime);
@@ -171,10 +192,10 @@ function run() {
 
 
 	// score
-context.fillStyle = "yellow";
-context.font="32px Arial";
-varscoreText = "Score: " + score;
-context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
+	context.fillStyle = "yellow";
+	context.font = "32px Arial";
+	varscoreText = "Score: " + score;
+	context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
 	// update the frame counter 
 	fpsTime += deltaTime;
 	fpsCount++;
@@ -193,7 +214,7 @@ initialize();
 // life counter
 //for(vari=0; i<lives; i++)
 {
-//context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
+	//context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
 }
 if (player.y >= canvas.height) lives--;
 //-------------------- Don't modify anything below here
