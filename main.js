@@ -51,6 +51,26 @@ function initialize() {
 			}
 		}
 	}
+	// initialize trigger layer in collision map
+cells[LAYER_OBJECT_TRIGGERS] = [];
+idx = 0;
+for(var y = 0; y < level1.layers[LAYER_OBJECT_TRIGGERS].height; y++) {
+cells[LAYER_OBJECT_TRIGGERS][y] = [];
+for(var x = 0; x < level1.layers[LAYER_OBJECT_TRIGGERS].width; x++) {
+if(level1.layers[LAYER_OBJECT_TRIGGERS].data[idx] != 0) {
+cells[LAYER_OBJECT_TRIGGERS][y][x] = 1;
+cells[LAYER_OBJECT_TRIGGERS][y-1][x] = 1;
+cells[LAYER_OBJECT_TRIGGERS][y-1][x+1] = 1;
+cells[LAYER_OBJECT_TRIGGERS][y][x+1] = 1;
+}
+else if(cells[LAYER_OBJECT_TRIGGERS][y][x] != 1) {
+// if we haven't set this cell's value, then set it to 0 now
+cells[LAYER_OBJECT_TRIGGERS][y][x] = 0;
+}
+idx++;
+}
+}
+
 }
 
 // This function will return the time in seconds since the function 

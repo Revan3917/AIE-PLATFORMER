@@ -187,6 +187,10 @@ Player.prototype.update = function (deltaTime) {
 		else
 			this.sprite.setAnimation(ANIM_JUMP_RIGHT)
 	}
+	if(cellAtTileCoord(LAYER_OBJECT_TRIGGERS, tx, ty) == true)
+{
+// game over man, game over
+}
 
 }
 
