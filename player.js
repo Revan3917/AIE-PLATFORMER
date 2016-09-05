@@ -201,7 +201,6 @@ this.cooldownTimer = 0.3;
 
 Player.prototype.draw = function () {
 
-	this.sprite.draw(context, this.position.x, this.position.y);
 }
 
 
