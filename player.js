@@ -8,8 +8,8 @@ var ANIM_JUMP_RIGHT = 4;
 var ANIM_WALK_RIGHT = 5;
 var ANIM_MAX = 6;
 
-
 var Player = function () {
+	
 	this.cooldownTimer = 0;
 	this.sprite = new Sprite("ChuckNorris.png");
 	this.sprite.buildAnimation(12, 8, 165, 126, 0.05,
@@ -42,13 +42,16 @@ var Player = function () {
 	this.falling = true;
 	this.jumping = false;
 	this.direction = LEFT;
-
+	
 };
 
 
 Player.prototype.update = function (deltaTime) {
 	this.sprite.draw(context, this.position.x - worldOffsetX, this.position.y);
+//if player falls of screen minus lives
 
+if (player.position.y > canvas.height) 
+{        lives--;        score--;        player.position.set(9 * TILE, 0 * TILE)    }// # spoiler
 	var left = false;
 	var right = false;
 	var jump = false;
@@ -187,11 +190,11 @@ Player.prototype.update = function (deltaTime) {
 		else
 			this.sprite.setAnimation(ANIM_JUMP_RIGHT)
 	}
-	if(cellAtTileCoord(LAYER_OBJECT_TRIGGERS, tx, ty) == true)
-{
-// game over man, game over
-gameState = STATE_GAMEOVER
-}
+	if (cellAtTileCoord(LAYER_OBJECT_TRIGGERS, tx, ty) == true) {
+		var
+			// game over man, game over
+			gameState = STATE_GAMEOVER
+	}
 
 }
 
