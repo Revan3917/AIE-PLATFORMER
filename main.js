@@ -222,8 +222,9 @@ function run() {
 		player.update(deltaTime); // update the player before drawing the map
 		drawMap();
 		player.draw();
-
-
+if (player.lives = 0){
+gameState = STATE_PLAYERDEAD
+}
 
 		// score
 		context.fillStyle = "yellow";
@@ -264,9 +265,9 @@ var musicBackground;
 var sfxFire;
 initialize();
 // life counter
-//for(vari=0; i<lives; i++)
+if(lives < 0)
 {
-	//context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
+	context.drawImage(heartImage, 20 + ((heartImage.width+2)*lives), 10);
 }
 if (player.y >= canvas.height) lives--; musicBackground = new Howl(
 	{
