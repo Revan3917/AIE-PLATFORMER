@@ -215,11 +215,7 @@ function runPlayerDead(deltaTime) {
 	context.fillText("You Lose", 200, 240);
 
 }
-
-function runGame(deltaTime) {
-
-
-	function run() {
+function run() {
 		context.fillStyle = "#ccc";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		var deltaTime = getDeltaTime();
@@ -259,6 +255,10 @@ function runGame(deltaTime) {
 		context.font = "14px Arial";
 		context.fillText("FPS: " + fps, 5, 20, 100);
 	}
+function runGame(deltaTime) {
+
+
+	
 }
 var musicBackground;
 var sfxFire;
