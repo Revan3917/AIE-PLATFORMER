@@ -5,6 +5,7 @@ var TILE = 35;
 var lives = 3
 var STATE_GAME = 1;
 var STATE_GAMEOVER = 2;
+var STATE_PLAYERDEAD = 3;
 var gameState = STATE_GAME;
 var heartImage = document.createElement("img");
 heartImage.src = "Heart.png"
@@ -33,6 +34,7 @@ var FRICTION = MAXDX * 6;
 var JUMP = METER * 1500;
 
 function initialize() {
+
 	for (var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) { // initialize the collision map
 		cells[layerIdx] = [];
 		var idx = 0;
@@ -57,24 +59,24 @@ function initialize() {
 		}
 	}
 	// initialize trigger layer in collision map
-cells[LAYER_OBJECT_TRIGGERS] = [];
-idx = 0;
-for(var y = 0; y < level1.layers[LAYER_OBJECT_TRIGGERS].height; y++) {
-cells[LAYER_OBJECT_TRIGGERS][y] = [];
-for(var x = 0; x < level1.layers[LAYER_OBJECT_TRIGGERS].width; x++) {
-if(level1.layers[LAYER_OBJECT_TRIGGERS].data[idx] != 0) {
-cells[LAYER_OBJECT_TRIGGERS][y][x] = 1;
-cells[LAYER_OBJECT_TRIGGERS][y-1][x] = 1;
-cells[LAYER_OBJECT_TRIGGERS][y-1][x+1] = 1;
-cells[LAYER_OBJECT_TRIGGERS][y][x+1] = 1;
-}
-else if(cells[LAYER_OBJECT_TRIGGERS][y][x] != 1) {
-// if we haven't set this cell's value, then set it to 0 now
-cells[LAYER_OBJECT_TRIGGERS][y][x] = 0;
-}
-idx++;
-}
-}
+	cells[LAYER_OBJECT_TRIGGERS] = [];
+	idx = 0;
+	for (var y = 0; y < level1.layers[LAYER_OBJECT_TRIGGERS].height; y++) {
+		cells[LAYER_OBJECT_TRIGGERS][y] = [];
+		for (var x = 0; x < level1.layers[LAYER_OBJECT_TRIGGERS].width; x++) {
+			if (level1.layers[LAYER_OBJECT_TRIGGERS].data[idx] != 0) {
+				cells[LAYER_OBJECT_TRIGGERS][y][x] = 1;
+				cells[LAYER_OBJECT_TRIGGERS][y - 1][x] = 1;
+				cells[LAYER_OBJECT_TRIGGERS][y - 1][x + 1] = 1;
+				cells[LAYER_OBJECT_TRIGGERS][y][x + 1] = 1;
+			}
+			else if (cells[LAYER_OBJECT_TRIGGERS][y][x] != 1) {
+				// if we haven't set this cell's value, then set it to 0 now
+				cells[LAYER_OBJECT_TRIGGERS][y][x] = 0;
+			}
+			idx++;
+		}
+	}
 
 }
 
@@ -200,56 +202,64 @@ function drawMap() {
 	}
 }
 
-function runGameOver(deltaTime)
-{
+function runGameOver(deltaTime) {
 	context.fillStyle = "#000";
-context.font="24px Arial";
-context.fillText("GAME OVER", 200, 240);
+	context.font = "24px Arial";
+	context.fillText("YOU WIN", 200, 240);
 
 }
 
-function runGame(deltaTime)
-{
+function runPlayerDead(deltaTime) {
+	context.fillStyle = "#000";
+	context.font = "24px Arial";
+	context.fillText("You Lose", 200, 240);
+
+}
+
+function runGame(deltaTime) {
 
 
-function run() {
-	context.fillStyle = "#ccc";
-	context.fillRect(0, 0, canvas.width, canvas.height);
-	var deltaTime = getDeltaTime();
-	player.update(deltaTime); // update the player before drawing the map
-	drawMap();
-	player.draw();
+	function run() {
+		context.fillStyle = "#ccc";
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		var deltaTime = getDeltaTime();
+		player.update(deltaTime); // update the player before drawing the map
+		drawMap();
+		player.draw();
 
 
 
-	// score
-	context.fillStyle = "yellow";
-	context.font = "32px Arial";
-	varscoreText = "Score: " + score;
-	context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
-	// update the frame counter 
-	fpsTime += deltaTime;
-	fpsCount++;
-	if (fpsTime >= 1) {
-		fpsTime -= 1;
-		fps = fpsCount;
-		fpsCount = 0;
+		// score
+		context.fillStyle = "yellow";
+		context.font = "32px Arial";
+		varscoreText = "Score: " + score;
+		context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
+		// update the frame counter 
+		fpsTime += deltaTime;
+		fpsCount++;
+		if (fpsTime >= 1) {
+			fpsTime -= 1;
+			fps = fpsCount;
+			fpsCount = 0;
+		}
+		switch (gameState) {
+			case STATE_GAME:
+				runGame(deltaTime);
+				break;
+			case STATE_GAMEOVER:
+				runGameOver(deltaTime);
+				break;
+				case STATE_PLAYERDEAD:
+				runGameOver(deltaTime);
+				break;
+		}
+
+		// draw the FPS
+		context.fillStyle = "#f00";
+		context.font = "14px Arial";
+		context.fillText("FPS: " + fps, 5, 20, 100);
 	}
-switch(gameState)
-{
-case STATE_GAME:
-runGame(deltaTime);
-break;
-case STATE_GAMEOVER:
-runGameOver(deltaTime);
-break;
 }
-
-	// draw the FPS
-	context.fillStyle = "#f00";
-	context.font = "14px Arial";
-	context.fillText("FPS: " + fps, 5, 20, 100);
-}}
 var musicBackground;
 var sfxFire;
 initialize();
