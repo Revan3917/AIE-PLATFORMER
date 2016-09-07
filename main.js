@@ -17,6 +17,7 @@ var LAYER_LADDERS = 1;
 var LAYER_OBJECT_TRIGGERS = 3;
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
+var GAMEOVER = false
 var cells = []; // the array that holds our simplified collision data
 // abitrary choice for 1m
 var METER = TILE;
@@ -201,7 +202,9 @@ function drawMap() {
 		}
 	}
 }
-
+if(lives = 0){
+gameState = STATE_PLAYERDEAD
+}
 function runGameOver(deltaTime) {
 	context.fillStyle = "#000";
 	context.font = "24px Arial";
@@ -216,58 +219,57 @@ function runPlayerDead(deltaTime) {
 
 }
 function run() {
-		context.fillStyle = "#ccc";
-		context.fillRect(0, 0, canvas.width, canvas.height);
-		var deltaTime = getDeltaTime();
-		player.update(deltaTime); // update the player before drawing the map
-		drawMap();
-		player.draw();
-if (player.lives = 0){
-gameState = STATE_PLAYERDEAD
-}
-
-		// score
-		context.fillStyle = "yellow";
-		context.font = "32px Arial";
-		varscoreText = "Score: " + score;
-		context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
-		// update the frame counter 
-		fpsTime += deltaTime;
-		fpsCount++;
-		if (fpsTime >= 1) {
-			fpsTime -= 1;
-			fps = fpsCount;
-			fpsCount = 0;
-		}
-		switch (gameState) {
-			case STATE_GAME:
-				runGame(deltaTime);
-				break;
-			case STATE_GAMEOVER:
-				runGameOver(deltaTime);
-				break;
-				case STATE_PLAYERDEAD:
-				runGameOver(deltaTime);
-				break;
-		}
-
-		// draw the FPS
-		context.fillStyle = "#f00";
-		context.font = "14px Arial";
-		context.fillText("FPS: " + fps, 5, 20, 100);
+	context.fillStyle = "#ccc";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+	var deltaTime = getDeltaTime();
+	player.update(deltaTime); // update the player before drawing the map
+	drawMap();
+	player.draw();
+	if (player.lives = 0) {
+		gameState = STATE_PLAYERDEAD
 	}
+
+	// score
+	context.fillStyle = "yellow";
+	context.font = "32px Arial";
+	varscoreText = "Score: " + score;
+	context.fillText(scoreText, SCREEN_WIDTH - 170, 35);
+	// update the frame counter 
+	fpsTime += deltaTime;
+	fpsCount++;
+	if (fpsTime >= 1) {
+		fpsTime -= 1;
+		fps = fpsCount;
+		fpsCount = 0;
+	}
+	switch (gameState) {
+		case STATE_GAME:
+			runGame(deltaTime);
+			break;
+		case STATE_GAMEOVER:
+			runGameOver(deltaTime);
+			break;
+		case STATE_PLAYERDEAD:
+			runGameOver(deltaTime);
+			break;
+	}
+
+	// draw the FPS
+	context.fillStyle = "#f00";
+	context.font = "14px Arial";
+	context.fillText("FPS: " + fps, 5, 20, 100);
+}
 function runGame(deltaTime) {
 
 
-	
+
 }
 var musicBackground;
 var sfxFire;
 initialize();
 // life counter
-if(lives < 0)
-{
-	context.drawImage(heartImage, 20 + ((heartImage.width+2)*lives), 10);
+for (var i = 0; i < lives; i++) {
+	context.drawImage(heartImage, 20 + ((heartImage.width + 2) * i), 10);
 }
 if (player.y >= canvas.height) lives--; musicBackground = new Howl(
 	{
