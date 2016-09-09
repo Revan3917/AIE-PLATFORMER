@@ -50,7 +50,7 @@ Player.prototype.update = function (deltaTime) {
 	this.sprite.draw(context, this.position.x - worldOffsetX, this.position.y);
 //if player falls of screen minus lives
 
-if (player.position.y > canvas.height) {        lives--;        score--;        player.position.set(9 * TILE, 0 * TILE)    }// # spoiler
+if (player.position.y > canvas.height) {        lives--;                player.position.set(9 * TILE, 0 * TILE)    }// # spoiler
 	var left = false;
 	var right = false;
 	var jump = false;
@@ -190,11 +190,14 @@ if (player.position.y > canvas.height) {        lives--;        score--;        
 			this.sprite.setAnimation(ANIM_JUMP_RIGHT)
 	}
 	if (cellAtTileCoord(LAYER_OBJECT_TRIGGERS, tx, ty) == true) {
-		var
+		
 			// game over man, game over
 			gameState = STATE_GAMEOVER
+			score ++ 
 	}
-
+if(lives == 0){
+gameState = STATE_PLAYERDEAD
+}
 }
 
 

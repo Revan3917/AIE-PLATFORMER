@@ -13,8 +13,8 @@ var context = canvas.getContext("2d");
 var LAYER_COUNT = 4;
 var LAYER_BACKGOUND = 0;
 var LAYER_PLATFORMS = 2;
-var LAYER_LADDERS = 1;
-var LAYER_OBJECT_TRIGGERS = 3;
+var LAYER_LADDERS = 3;
+var LAYER_OBJECT_TRIGGERS = 1;
 var startFrameMillis = Date.now();
 var endFrameMillis = Date.now();
 var GAMEOVER = false
@@ -202,18 +202,19 @@ function drawMap() {
 		}
 	}
 }
-if(lives = 0){
-gameState = STATE_PLAYERDEAD
-}
+
 function runGameOver(deltaTime) {
 	context.fillStyle = "#000";
 	context.font = "24px Arial";
-	context.fillText("YOU WIN", 200, 240);
+	if(lives == 0){context.fillText("Chuck is Highly disapointed in your performance", 20, 240);
+	}
+	else{context.fillText("YOU WIN", 200, 240)}
 
 }
 
 function runPlayerDead(deltaTime) {
 	context.fillStyle = "#000";
+	console.log("welp")
 	context.font = "24px Arial";
 	context.fillText("You Lose", 200, 240);
 
@@ -228,7 +229,10 @@ function run() {
 	if (player.lives = 0) {
 		gameState = STATE_PLAYERDEAD
 	}
-
+for (var i = 0; i < lives; i++) {
+	console.log("I am Working");
+	context.drawImage(heartImage, 20 + ((heartImage.width + 2) * i), 10);
+}
 	// score
 	context.fillStyle = "yellow";
 	context.font = "32px Arial";
@@ -268,9 +272,7 @@ var musicBackground;
 var sfxFire;
 initialize();
 // life counter
-for (var i = 0; i < lives; i++) {
-	context.drawImage(heartImage, 20 + ((heartImage.width + 2) * i), 10);
-}
+
 if (player.y >= canvas.height) lives--; musicBackground = new Howl(
 	{
 		urls: ["background.mp3"],
